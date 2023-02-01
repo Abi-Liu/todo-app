@@ -66,4 +66,12 @@ app.put("/markUncompleted", async (req, res) => {
   res.json("marked uncompleted");
 });
 
+
+app.delete('/delete', async (req, res) => {
+    const deleteItem = await db.collection('todo').deleteOne(req.body)
+    console.log('item deleted')
+    res.json('item deleted')
+})
+
+
 app.listen(process.env.PORT || PORT, () => console.log(`server running on port ${PORT}`))
