@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h1>Todo List</h1>
@@ -15,10 +16,15 @@
     <ul>
         <% for(let i=0; i < items.length; i++){%>
             <li>
-                <span><%=items[i].todo%></span>
+                <% if(items[i].completed === true){ %>
+                    <span class = 'completed'><%=items[i].todo%></span>
+                <%} else { %>
+                    <span class = 'items'><%=items[i].todo%></span>
+                <%}%>
             </li>       
         <%}%>
     </ul>
     <h3><%= incomplete%> left to do</h3>
+    <script src = /js/main.js></script>
 </body>
 </html>

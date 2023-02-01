@@ -17,6 +17,7 @@ MongoClient.connect(dbConnectionStr, {useUnifiedTopology: true})
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 
 app.get('/', async (req,res) =>{
     const items = await db.collection('todo').find().toArray()
@@ -32,15 +33,27 @@ app.get('/', async (req,res) =>{
 //     })
 })
 
-app.post('/add', (req, res) => {
+app.post('/add', async(req, res) => {
     req.body.completed = false
-    db.collection('todo').insertOne(req.body)
-    .then(result => {
-        console.log('item added')
-        res.redirect('/')
-    })
+    const insert = await db.collection('todo').insertOne(req.body)
+    console.log('item added')
+    res.redirect('/')
+    
+    // db.collection('todo').insertOne(req.body)
+    // .then(result => {
+    //     console.log('item added')
+    //     res.redirect('/')
+    // })
 })
 
-
+app.put('/markCompleted', async (req,res) =>{
+    let completed = await db.collection('todo').updateOne(req.body, {
+        $set: {
+            completed: true
+        }
+    })
+    console.log('marked complete')
+    res.json('marked completed')
+})
 
 app.listen(process.env.PORT || PORT, () => console.log(`server running on port ${PORT}`))
