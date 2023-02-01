@@ -9,24 +9,26 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Todo List</h1>
-    <form action="/add" method="POST">
-        <input type="text" name="todo" placeholder="todo">
-        <button type = 'submit'>Submit</button>    
-    </form>
-    <ul>
-        <% for(let i=0; i < items.length; i++){%>
-            <li>
-                <% if(items[i].completed === true){ %>
-                    <span class = 'completed'><%=items[i].todo%></span>
-                <%} else { %>
-                    <span class = 'items'><%=items[i].todo%></span>
+    <div class = 'container'>
+        <h1>Todo List</h1>
+            <form action="/add" method="POST">
+                <input type="text" name="todo" placeholder="todo">
+                <button type = 'submit'>Submit</button>    
+            </form>
+            <ul>
+                <% for(let i=0; i < items.length; i++){%>
+                    <li>
+                        <% if(items[i].completed === true){ %>
+                            <span class = 'completed'><%=items[i].todo%></span>
+                        <%} else { %>
+                            <span class = 'items'><%=items[i].todo%></span>
+                        <%}%>
+                        <span class = 'fa-solid fa-trash'></span>
+                    </li>       
                 <%}%>
-                <span class = 'fa-solid fa-trash'></span>
-            </li>       
-        <%}%>
-    </ul>
-    <h3><%= incomplete%> left to do</h3>
+            </ul>
+            <h3><%= incomplete%> left to do</h3>
+    </div>
     <script src = /js/main.js></script>
 </body>
 </html>
