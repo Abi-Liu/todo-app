@@ -56,4 +56,14 @@ app.put('/markCompleted', async (req,res) =>{
     res.json('marked completed')
 })
 
+app.put("/markUncompleted", async (req, res) => {
+  let completed = await db.collection("todo").updateOne(req.body, {
+    $set: {
+      completed: false,
+    },
+  });
+  console.log("marked uncomplete");
+  res.json("marked uncompleted");
+});
+
 app.listen(process.env.PORT || PORT, () => console.log(`server running on port ${PORT}`))
