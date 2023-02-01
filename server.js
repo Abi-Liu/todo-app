@@ -18,14 +18,18 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 
-app.get('/', (req,res) =>{
-    db.collection('todo').find().toArray()
-    .then(data => {
-        db.collection('todo').countDocuments({completed: false})
-        .then(result => {
-            res.render("index.ejs", { items: data, incomplete: result});
-        })
-    })
+app.get('/', async (req,res) =>{
+    const items = await db.collection('todo').find().toArray()
+    const incomplete = await db.collection('todo').countDocuments({completed: false})
+    res.render('index.ejs', {items: items, incomplete: incomplete})
+
+//     db.collection('todo').find().toArray()
+//     .then(data => {
+//         db.collection('todo').countDocuments({completed: false})
+//         .then(result => {
+//             res.render("index.ejs", { items: data, incomplete: result});
+//         })
+//     })
 })
 
 app.post('/add', (req, res) => {
